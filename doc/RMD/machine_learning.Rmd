@@ -1,0 +1,44 @@
+---
+title: "machine learning"
+output:
+  pdf_document:
+    toc: yes
+  html_notebook:
+    toc: yes
+  html_document:
+    df_print: paged
+    toc: yes
+editor_options:
+  chunk_output_type: inline
+---
+
+Getting papers on `machine learning` by an arbitrary discipline.
+These disciplnes are flexible, and can be modified by any user.
+
+```{r ML_papers}
+library(petro.One)
+
+major <- c("machine learning")
+minor <- c("reservoir", "production")
+           # "logging", "completion", "intervention",
+           # "drilling", "geology", "seismic", "petrophysics", "geophysics", 
+           # "economics", "metering", "pvt", "offshore")
+
+# the returning data structure is a a list
+# the list contains two dataframes: one for the keywords and a second for the papers
+prod.li <- join_keywords(major, minor, get_papers = TRUE, sleep = 3)
+prod.li
+```
+
+Using `rprojroot::find_rstudio_root_file()` to get the root folder of the project. Then we write the `csv` to the `data` folder.
+
+```{r ml_csv, comment = NA}
+# write dataframes to csv
+# readr::write_csv(prod.li$keywords, "ml-keywords.csv")
+# readr::write_csv(prod.li$papers,   "ml-papers.csv")
+
+write.csv(prod.li$keywords, file.path(rprojroot::find_rstudio_root_file(), "data", "ml-keywords.csv"))
+write.csv(prod.li$papers,   file.path(rprojroot::find_rstudio_root_file(), "data", "ml-papers.csv"))
+```
+
+

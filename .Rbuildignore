@@ -1,5 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+doc
+results
 makefiles
 Makefile
 ^README\.Rmd$
