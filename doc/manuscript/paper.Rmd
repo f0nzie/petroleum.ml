@@ -1,0 +1,141 @@
+---
+title: Machine Learning Applications for Petroleum Engineering
+preprint: false
+author: 
+  - name: Alfonso R. Reyes
+    affiliation: 1
+    corresponding: false
+    email: alfonso.reyes@oilgainsanalytics.com
+
+affiliation:
+  - code: 1
+    address: Oil Gains Analytics, The Woodlands, TX 77381
+
+abstract: >
+  Data Analytics, Machine Learning and Artificial Intelligence discoveries in petroleum engineering are becoming daily news of today. It is not a surprise given the massive amounts of data that the petroleum sciences have to deal with either from real-time time surveillance, database streams, lab results, post-job reports, applications execution, modeling results, etc. 
+header-includes: >
+  \usepackage{lipsum}
+bibliography: sample.bib
+output: 
+  rticles::peerj_article:
+    base_format: bookdown::pdf_document2 # bookdown::pdf_document2 # for using \@ref()
+---
+
+
+# Introduction {-}
+
+The last few years the oi industry has seen a growing use of `machine learning techniques` to address issues in the field by analyzing data, trying to find patterns and relationships. These techniques vary from to our well known `Linear Regression` to `Logistic Regression`, `Support Vector Machines`, `Discriminant Analysis`, `Principal Component Analysis`, `Naive Bayes`, `K-Nearest Neighbor`, `Gaussian Process Regression`, `Neural Networks`, `Decision Trees`, `K-Means`, `Fuzzy C-means`, `Gaussian Mixture Models`,` Hidden Markov`, `Genetic Algorithms`, `Reinforcement Learning`, `Kernel Density Estimation`, `Boosting`, up to the most hyped of today such as `Deep Learning` and `Convolutional Networks`. These techniques have been documented within our petroleum engineering community through papers and conferences. This paper will discuss how these machine learning techniques have been applied to the various `disciplines` of petroleum engineering: reservoir engineering, production engineering, logging, completions, well intervention, workover, drilling, geology, petrophysics, geophysics, economics and surface facilities. See Fig. \@ref(mluniverse). 
+
+<!-- 3. Insert figure the pandoc way -->
+![The following figure gives us a panoramic idea of the machine learning algorithms used today in petroleum engineering.](images/machine_learning_universe.png){#mluniverse width=85%}
+
+The most used machine learning algorithm in petroleum engineering turns out to be `neural networks`. See figure \ref{fig:algos}.
+
+<!-- 2. Insert figure the RMarkdown way -->
+
+```{r algos, fig.cap = "Top ten machine learning algorithms in petroleum engineering", out.width="50%", cache=TRUE, echo=FALSE}
+knitr::include_graphics("./images/most_used_algo_table.png")
+```
+
+
+# Petroleum Engineering Applications
+Following the literature and papers available, machine learning has permitted the development of these petroleum engineering applications:
+
+## Reservoir
+* reserves estimation
+* reservoir modeling
+* reservoir simulation speedup
+* history matching optimization
+* reservoir characterization
+* rock properties prediction
+* PVT properties prediction
+* oil recovery improvement
+* rock properties estimation
+* permeability prediction
+* well placement
+
+## Production
+* correlation development
+* production optimization
+* production forecast
+* virtual metering
+* well performance prediction
+* downhole control optimization
+* A/L decision support
+* ESP failure prediction
+* well performance prediction
+* production scheduling
+* bottomhole measurements determination
+* stimulation screening
+* well candidate selection
+
+## Well Engineering
+* well integrity assurance
+* stuck pipe prediction
+* drilling failure detection
+* drilling stress prediction
+* drilling automation
+* drilling schedule optimization
+* drilling costs reduction
+* penetration prediction
+* equipment malfunction prediction and fault detection
+* steering optimization
+* wear prediction, fatigue prediction
+* well design performance
+* well completion screening
+
+## Secondary/Tertiary Recovery
+* waterflood prediction and optimization
+* injection profile prediction
+* tertiary screening
+
+## Flow Assurance
+* corrosion prediction
+* fluid type identification
+* erosion prediction
+* sand prediction
+
+## Surface
+
+* decision support
+* pipeline routing optimization
+* gas supply optimization
+
+
+## Data
+* digital oilfield
+* data security enhancement 
+* data quality assurance
+
+## All
+* expert systems
+* risk reduction
+* uncertainty reduction               
+
+
+# Methods/Procedure
+Although `Fuzzy Logic` is not a machine learning technique or algorithm, we included it as a machine learning technique. This is due to the relative number of papers on the subject. *Fuzzy logic has been applied to many fields, from control theory to artificial intelligence. * [Wikipedia][1]
+
+
+# Results/Observations
+* In the petroleum engineering literature no distinction is made between `supervised` and `unsupervised` learning. The ML technique is used and applied but without making a distinction to which category of learning it belongs.
+* There are additional categories under machine learning that are not being considered in the applications. That is the case of Reinforcement Learning, Active Learning and Semi-Supervised Learning. They are not just used enough to justify a closer view in these ML areas.
+* In couple of cases  ML algorithms are used in two categories such as neural networks which is used in classification and regression under supervised learning; or Support Vector Machines that is used in two distinct learning areas of supervised and unsupervised learning.
+
+# Conclusions
+
+
+# Novel/Additive information
+
+# Machine Learning Techniques
+\paragraph{By learning method} The ML techniques have been categorized as belonging to two main branches according to the learning method: supervised learning and unsupervised learning. The majority of applications have been developed on the supervised area since enough data is available for performing the training and testing of the labelled data. Unsupervised learning is more rare given the fact that the application requires no previous knowledge of the data, which makes the findings riskier and the work laborious and challenging.
+
+There are several ML techniques. Depending of the discipline you are looking for you will see a particular preference for a method. 
+
+There have been few attempts at classifying the machine learning techniques. Here we can see one performed by the Matlab company (Fig. \ref{fig:matlab}).
+
+```{r matlab, fig.marginwdth = TRUE, fig.cap = "Machine Learning algorithms as classified by Matlab Corporation", out.width="90%", cache=TRUE, echo=FALSE}
+knitr::include_graphics("images/matlab_ml_classification.png")
+```
+
+# References
