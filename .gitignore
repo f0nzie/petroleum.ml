@@ -6,3 +6,13 @@
 *.html
 
 *.png
+
+doc/manuscript/paper_cache/
+
+doc/manuscript/paper\.pdf
+
+doc/manuscript/paper\.tex
+
+doc/RMD/text_mining_pe\.pdf
+
+results/
