@@ -1,0 +1,14 @@
+---
+title: "Read Machine Learning raw dataset"
+output: html_notebook
+---
+
+```{r}
+ml_papers <- read.csv(file.path(rprojroot::find_rstudio_root_file(),"data/ml-papers.csv"))
+```
+
+
+```{r}
+ml_papers
+```
+
