@@ -1,0 +1,324 @@
+---
+title: "Test if 746 papers captures those already manually selected"
+output: html_notebook
+---
+
+
+```{r}
+# read the user modified Excel file with PE discipline assignment
+devres_loc <- "./inst/results"
+xls.nodups.papers.4 <- readxl::read_xlsx(paste(devres_loc, "ml_nodups_papers_4.xlsx", sep = "/"), sheet = 1)
+xls.nodups.papers.4
+```
+
+
+```{r}
+library(dplyr)
+
+nodups.papers.ren <- xls.nodups.papers.4 %>% 
+    select(-c(X__1, rec)) %>% 
+    rename(discipline = V2, algorithm = V3)
+
+nodups.papers.ren
+```
+
+
+## Papers manually selected
+
+```{r}
+# find one paper at a time
+grep("172610", nodups.papers.ren$id, value = TRUE)
+```
+
+
+```{r}
+papers.1 <- c("172610",
+                "69624",
+                 "67260",
+                 "84441",
+                 "181683",
+                 "150314",
+                 "143842",
+                 "68163",
+                 "90259")
+
+find_paper <- function(x) {
+    grep(x, nodups.papers.ren$id, value = TRUE)
+}
+
+# res.1 <- matrix(unlist(sapply(papers.1, find_paper)),  nrow=10, byrow=T)
+res.1 <- sapply(papers.1, find_paper)
+
+```
+
+```{r}
+# https://stackoverflow.com/a/4227504/5270873
+data.frame(sapply(res.1,c))
+```
+
+
+```{r}
+# https://stackoverflow.com/a/4227483/5270873
+# the problem is that values repeat in the 2nd column.
+do.call(rbind.data.frame, res.1)
+```
+
+```{r}
+data.frame(Reduce(rbind, res.1))
+# number of columns of result is not a multiple of vector length (arg 2)
+# some row.names duplicated: 3,4,5,6,7,8,9 --> row.names NOT used
+```
+
+
+```{r}
+# this one works
+# it adds a counter to the row.names with the paper that has two different types
+# https://stackoverflow.com/a/29916958/5270873
+do.call(rbind, lapply(res.1, data.frame, stringsAsFactors=FALSE))
+```
+
+
+```{r}
+f = function(x) function(i) unlist(lapply(x, `[[`, i), use.names=FALSE)
+as.data.frame(Map(f(res.1), names(res.1[[1]])))
+```
+
+
+```{r}
+find_paper("150314")
+```
+
+```{r}
+find_paper <- function(x) {
+    ret <- grep(x, nodups.papers.ren$id, value = TRUE)
+    if (identical(ret, character(0))) ret <- NA
+    return(ret)
+    
+}
+
+find_paper("27561")
+```
+
+
+```{r}
+
+paper_list <- "
+            172610
+            69624
+             67260
+             84441
+             181683
+             150314
+             143842
+             68163
+             90259
+            27561
+            18158
+            52959
+            78334
+            170683
+            94357
+            85650
+            17413
+            69405
+            87008
+            27905
+            30556
+            130095
+            170683
+            99667
+            170660
+            167897
+            101474
+            102492
+            86467
+            100131
+            122186
+            83974
+            133831
+            99882
+            90720
+            94357
+            90404
+            136373
+            90372
+            128636
+            170866
+            136373
+            112223
+            56433
+            19619
+            29220
+            46206
+            69405
+"
+
+papers_list.df <- read.table(text = paper_list, stringsAsFactors = FALSE, 
+                       colClasses = "character", col.names = "paper")
+```
+
+
+
+```{r rows.print=25}
+
+find_paper <- function(x) {
+    ret <- grep(x, nodups.papers.ren$id, value = TRUE)
+    if (identical(ret, character(0))) ret <- NA
+    return(ret)
+    
+}
+
+
+papers.2 <- read.table(text = paper_list, stringsAsFactors = FALSE, 
+                       colClasses = "character", col.names = "paper")
+# papers.2
+# grep("90259", nodups.papers.ren$id, value = TRUE)
+
+res.2 <- sapply(papers.2$paper, find_paper)
+
+
+# papers not found are not shown
+# https://stackoverflow.com/a/29916958/5270873
+df <- do.call(rbind, lapply(res.2, data.frame, stringsAsFactors=FALSE))
+names(df)[1] <- "paper"
+df$search <- row.names(df)
+df <- df[, c(2,1)]
+row.names(df) <- NULL
+df
+```
+
+
+> 10 out 34 papers were found in the paper search (746). What about trying different kind of search?
+
+
+```{r}
+# build the new find_papers() function
+
+#' Find papers in a paper_id column vector
+#' 
+#' The function looks for the papers in the input vector x in the given dataframe 
+#' column corresponding to the paper_id
+#' @param x input vector of paper to be searched
+#' @param df_papers_id paper_id in the dataframe to be searched
+#' @export
+find_papers <- function(x, df_papers_id) {
+    .find_paper <- function(x, df_papers_id) {
+    ret <- grep(x, df_papers_id, value = TRUE)
+    if (identical(ret, character(0))) ret <- NA
+    return(ret)
+    }
+    
+    df <- do.call(rbind, lapply(sapply(x, .find_paper, df_papers_id), 
+                            data.frame, stringsAsFactors=FALSE))
+    names(df)[1] <- "paper"
+    df$search <- row.names(df)
+    df <- df[, c(2, 1)]
+    row.names(df) <- NULL
+    df
+}
+
+pap <- c("90259", "27561", "1706831", "181683", "150314")
+
+find_papers(pap, nodups.papers.ren$id)
+
+```
+
+
+```{r}
+find_papers(papers.2$paper, nodups.papers.ren$id)
+```
+
+What keyword did we miss when we were searching the papers?
+Why papers that have been downloaded were not selected in the search?
+
+## Looking for papers that have `neural network` in the title or body
+
+```{r}
+library(petro.One)
+
+major <- c("neural network")
+minor <- c("reservoir", "production", "logging", "completion", "intervention",
+           "drilling", "geology", "seismic", "petrophysics", "geophysics", 
+           "economics")
+
+# the returning data structure is a a list
+# the list contains two dataframes: one for the keywords and a second for the papers
+prod.li <- join_keywords(major, minor, get_papers = TRUE, sleep = 3)
+prod.li
+```
+
+```{r}
+found.df <- find_papers(papers_list.df$paper, prod.li$papers$paper_id)
+```
+
+```{r}
+summary(found.df)
+```
+
+```{r}
+str(found.df)
+```
+
+```{r}
+found.df[which(is.na(found.df$paper )),]
+```
+
+SPE 29220 Artificial Neural Network As A Valuable Tool For Petroleum Engineers
+
+
+```{r}
+library(petro.One)
+
+major <- c("Neural Network")
+
+# the returning data structure is a a list
+# the list contains two dataframes: one for the keywords and a second for the papers
+prod.li2 <- join_keywords(major, get_papers = TRUE, sleep = 3)
+prod.li2
+```
+
+```{r}
+found.df <- find_papers(papers_list.df$paper, prod.li2$papers$paper_id)
+found.df[which(is.na(found.df$paper )),]
+```
+
+```{r}
+write.csv( prod.li2$papers, file = "neural_network.csv")
+```
+
+
+
+```{r}
+library(petro.One)
+
+major <- c("neural network", "neural-network", "NEURAL NETWORK", "Neural Networks",
+           "neuro", "neural", 
+           "machine learning", "MACHINE LEARNING",
+           "pattern recognition",
+           "artificial neural network", 
+           "data driven", "data-driven", "data mining", "analytics",
+           "artificial intelligence", "artificial intelligent", 
+           "intelligent system", "cognitive",
+           "dataset", "datasets", "data set", "data sets")
+
+# the returning data structure is a a list
+# the list contains two dataframes: one for the keywords and a second for the papers
+prod.li3 <- join_keywords(major, get_papers = TRUE, sleep = 3)
+prod.li3
+```
+
+
+
+
+```{r}
+found.df <- find_papers(papers_list.df$paper, prod.li3$papers$paper_id)
+found.df[which(is.na(found.df$paper )),]
+```
+
+
+
+
+
+
+
+

@@ -1,0 +1,48 @@
+---
+title: "Start using join_keywords function"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+  html_notebook:
+    toc: yes
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE, 
+                      collapse = TRUE, 
+                      comment = "#>")
+```
+
+# How many ML papers on water injection and water flooding?
+
+```{r water-ml, cache=TRUE}
+
+library(petro.One)
+# provide two different set of keywords to combine as vectors
+major  <- c("water injection", "water flooding")
+minor  <- c("machine-learning")
+lesser <- c("neural network", "algorithm")
+
+p.df <- join_keywords(major, minor, lesser, get_papers = FALSE)
+p.df
+```
+
+
+
+```{r ml-zero, cache=TRUE}
+# this was failing in machine learning notebook
+
+major <- c("machine learning")
+minor <- c("petrophysics", "seismic", "geophysics")
+ml_technique <- c("deep learning", "principal component analysis")
+
+by.ml_technique <- join_keywords(major, minor, ml_technique, 
+                                 get_papers = TRUE, 
+                                 sleep = 3, verbose = FALSE)
+by.ml_technique
+```

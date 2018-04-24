@@ -1,0 +1,45 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## Read Excel file with Petroleum Engineering applications
+The Excel file has been manually modified by the user to enter which petroleum engineering discipline the paper belongs to. This is a very tiring activity since the user has to go paper by paper and find whichdiscipline falls into.
+
+```{r}
+# read the user modified Excel file with PE discipline assignment
+devres_loc <- "./inst/results"
+xls.nodups.papers.4 <- readxl::read_xlsx(paste(devres_loc, "ml_nodups_papers_4.xlsx", sep = "/"), sheet = 1)
+xls.nodups.papers.4
+```
+
+```{r}
+# unique PE applications
+unique(xls.nodups.papers.4$pe_app)
+```
+
+
+```{r}
+library(dplyr)
+
+# group by application and algorithm
+grouped.5 <- xls.nodups.papers.4 %>% 
+    select(-c(X__1)) %>% 
+    group_by(pe_app, V3) %>% 
+    summarize(avg_count = n()) %>% 
+    rename(algorithm = V3) %>% 
+    arrange(desc(algorithm)) %>% 
+    print
+```
+
+> Note. There are plenty of rows that are NA because we didn't go through all the papers to assign Petroleum Engineering application (`pe_app`).
+
+
+An alternative here is applying some machine learning algorithm to classify the papers following the training data (those papers that were assigned a `pe_app`). But that would be misleading since we really don't know if a paper really used a specific ML algorithm unless we open and analyze the paper itself; the classification that has been performed based on the paper's title is flawd but at least gives us an idea of what we are pursuing.
+
+
+The best route is doing samplng on the non-duplicate papers.
+
+
+
+
