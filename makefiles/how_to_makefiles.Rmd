@@ -46,6 +46,58 @@ clean:
 
 README.md : README.Rmd
 	R --slave -e 'rmarkdown::render("$<")'
+```
 
+## Change project nature
+We don't want to create a package nor we want the package context menu under the `Build` tab.
+
+
+### Change from `Package` to `Makefile`
+* Go to Tools, Project Options, Build Tools, and select `Makefile` in *Project build tools*.
+
+
+### Change type of README
+
+Change from this:
 
 ```
+---
+output: github_document
+---
+```
+
+to this:
+
+```
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+```
+
+### Fix of the `markdown_github`
+http://pandoc.org/MANUAL.html#markdown-variants
+
+Use this instead:
+
+```
+---
+output:
+  md_document:
+    variant: gfm
+---
+```
+This will prevent the creatyion of an `html` file.
+
+### Change `Makefile`
+To build the `README.Rmd`, we change these two lines:
+
+```
+all: README.md mds
+```
+
+```
+README.md : README.Rmd
+	R --slave -e 'rmarkdown::render("$<")'
+```	
