@@ -1,12 +1,10 @@
 Package: petroleum.ml
-Type: Package
 Title: Machine Learning Applications in Machine Learning
 Version: 0.1.0
-Authors@R: person("Alfonso R.", "Reyes", role = c("aut", "cre"), email = "alfonso.reyes@oilgainsanalytics.com")
-Maintainer: Alfonso R. Reyes <alfonso.reyes@oilgainsanalytics.com>
+Author: Alfonso R. Reyes
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-Depends: R (>= 3.4)     
+Depends: R (>= 3.4.0)     
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
