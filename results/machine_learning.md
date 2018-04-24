@@ -72,8 +72,8 @@ Using `rprojroot::find_rstudio_root_file()` to get the root folder of the projec
 # readr::write_csv(prod.li$keywords, "ml-keywords.csv")
 # readr::write_csv(prod.li$papers,   "ml-papers.csv")
 
-write.csv(prod.li$keywords, file.path(rprojroot::find_rstudio_root_file(), "data", "ml-keywords.csv"))
-write.csv(prod.li$papers,   file.path(rprojroot::find_rstudio_root_file(), "data", "ml-papers.csv"))
+write.csv(prod.li$keywords, file.path(rprojroot::find_rstudio_root_file(), "data", "ml-keywords.csv"), row.names = FALSE)
+write.csv(prod.li$papers,   file.path(rprojroot::find_rstudio_root_file(), "data", "ml-papers.csv"), row.names = FALSE)
 ```
 
 
