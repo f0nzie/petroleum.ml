@@ -1,0 +1,158 @@
+---
+title: "Find papers with Machine Learning on top"
+output: html_notebook
+---
+
+## ML techniques organized by supervised and unspervised
+```
+Error in open.connection(x, "rb") : HTTP error 500.
+Warning in .Internal(exists(x, envir, mode, inherits)) :
+  closing unused connection 3 (https://www.onepetro.org/search?q="machine+learning"AND"economics"AND"GPR"&peer_reviewed=&published_between=&from_year=&to_year=&dc_type=conference-paper&start=-1000&rows=1000)
+```  
+
+```{r}
+major <- c("machine learning")
+discipline <- c("reservoir", "production", "surface facilities", "metering",
+           "logging", "pvt", "completion", "intervention", "workover",
+           "drilling",  "geology", "petrophysics", "geophysics", "seismic",
+           "economics")
+ml_technique.1 <- c("random forest",
+                    "GPR", " Gaussian Process Regression",
+                    "PCA", "principal component analysis",
+                    "boosting", 
+                    "discriminant analysis")
+by.ml_technique.1 <- join_keywords(major, discipline, ml_technique.1, 
+                                   get_papers = TRUE, sleep = 3)
+
+by.ml_technique.1
+```
+
+
+```{r cache=TRUE}
+library(petro.One)
+
+PROJHOME <- rprojroot::find_rstudio_root_file()
+
+
+major <- c("machine learning")
+discipline <- c("reservoir", "production", "surface facilities", "metering",
+           "logging", "pvt",
+           "completion", "intervention", "workover", "drilling", 
+           "geology", "petrophysics", "geophysics", "seismic",
+           "economics")
+
+ml_technique <- c("boosting", 
+                    "discriminant analysis", 
+                    "kernel approximation",
+                    "genetic algorithm",
+                    "SVM", "Support Vector Machine", 
+                    "nearest neighbor", "k-nearest neighbor",
+                    "deep learning", 
+                    "convolutional network", "convolutional neural",
+                    "kernel density estimation",
+                    "naive bayes", 
+                    "logistic regression",
+                    "neural network", "neural nets", 
+                    "decision tree",
+                    "Gradient Boosting Tree",
+                    "linear regression", 
+                    "random forest",
+                    "GPR", " Gaussian Process Regression",
+                    "PCA", "principal component analysis",
+                    "SVD", "Singular Value Decomposition",
+                    "c-means", "fuzzy c-means",
+                     "k-means",  
+                    "gaussian mixture", "gaussian mixture model",
+                    "reinforcement learning",
+                    "hierarchical", "hierarchical clustering",
+                    
+                    "fuzzy logic", 
+                    "hidden markov",
+                  
+                    "SVR", "Support Vector Regression"
+                   )
+
+by.ml_technique <- join_keywords(major, discipline, ml_technique, 
+                                   get_papers = TRUE, sleep = 3)
+
+by.ml_technique
+save(by.ml_technique, 
+     file = file.path(PROJHOME, "data", "ml_technique.rda")) 
+
+# 8609 papers
+```
+
+
+```{r}
+# only the  papers dataframe
+write.csv(by.ml_technique.4$papers, file = "ml_papers_4.csv")  # just in case
+```
+
+
+```{r}
+ml.keywords.4 <- by.ml_technique.4$keywords
+ml.papers.4   <- by.ml_technique.4$papers
+```
+
+
+## Two levels: top and discipline
+
+```{r}
+library(petro.One)
+
+
+top <- c("machine learning")
+discipline <- c("reservoir", "production", "surface facilities", "metering",
+           "logging", 
+           "completion", "intervention", "workover", "drilling", 
+           "geology", "petrophysics", "geophysics", "seismic",
+           "economics")
+
+by.discipline <- join_keywords(top, discipline, 
+                                   get_papers = TRUE, sleep = 3)
+by.discipline
+```
+
+
+```{r}
+by.discipline.ml <- by.discipline
+
+by.discipline.ml$uid <- 
+```
+
+
+```{r}
+library(petro.One)
+
+
+top <- c("neural network")
+discipline <- c("reservoir", "production", "surface facilities", "metering",
+           "logging", 
+           "completion", "intervention", "workover", "drilling", 
+           "geology", "petrophysics", "geophysics", "seismic",
+           "economics")
+
+by.discipline.nn <- join_keywords(top, discipline, 
+                                   get_papers = FALSE, sleep = 3)
+by.discipline.nn
+```
+
+
+
+
+```{r}
+# data driven is the same as data-driven
+library(petro.One)
+
+
+top <- c("data driven")
+discipline <- c("reservoir", "production", "surface facilities", "metering",
+           "logging", 
+           "completion", "intervention", "workover", "drilling", 
+           "geology", "petrophysics", "geophysics", "seismic",
+           "economics")
+
+by.discipline.dd <- join_keywords(top, discipline, 
+                                   get_papers = FALSE, sleep = 3)
+by.discipline.dd
+```
