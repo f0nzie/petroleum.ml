@@ -1,12 +1,12 @@
 ---
 title: "artificial intelligence"
 output:
-  pdf_document:
+  html_document:
+    df_print: paged
     toc: yes
   html_notebook:
     toc: yes
-  html_document:
-    df_print: paged
+  pdf_document:
     toc: yes
 editor_options:
   chunk_output_type: inline

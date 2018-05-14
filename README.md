@@ -1,13 +1,20 @@
+---
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 
 # petroleum.ml
 
-The goal of petroleum.ml is to …
+The goal of petroleum.ml is to ...
 
 ## Installation
 
-You can install the released version of petroleum.ml from
-[CRAN](https://CRAN.R-project.org) with:
+You can install the released version of petroleum.ml from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("petroleum.ml")
@@ -17,14 +24,15 @@ install.packages("petroleum.ml")
 
 This is a basic example which shows you how to solve a common problem:
 
-``` r
+
+```r
 ## basic example code
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
-``` r
+
+```r
 summary(cars)
 #>      speed           dist       
 #>  Min.   : 4.0   Min.   :  2.00  
@@ -35,12 +43,10 @@ summary(cars)
 #>  Max.   :25.0   Max.   :120.00
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date.
+You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
 
 You can also embed plots, for example:
 
 <img src="man/figures/README-pressure-1.png" width="100%" />
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub\!
+In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
